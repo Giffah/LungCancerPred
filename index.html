@@ -238,13 +238,20 @@
 
   <script>
     document.getElementById('predictionForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      setTimeout(function() {
-        document.getElementById('predictionResult').textContent = prediction_text;
-        document.getElementById('resultPopup').style.display = 'block';
-      }, 1000);
-    });
+  e.preventDefault();
+  
+  // Simulate prediction (replace this with actual AJAX call to your server)
+  setTimeout(function() {
+    document.getElementById('predictionResult').textContent = prediction_text;
+    document.getElementById('resultPopup').style.display = 'block';
+    
+    // Hide the popup after 5 seconds
+    setTimeout(function() {
+      document.getElementById('resultPopup').style.display = 'none';
+    }, 4000);
+    
+  }, 1000);
+});
   </script>
 </body>
 </html>
