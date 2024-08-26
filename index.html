@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LC Pred</title>
   <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
@@ -14,7 +13,7 @@
       font-family: 'Arimo', sans-serif;
     }
     .container {
-      max-width: 800px;
+      max-width: 600px;
       margin: 0 auto;
       padding: 20px;
       background: #fff;
@@ -36,22 +35,12 @@
     .login {
       margin-top: 20px;
     }
-    .login .input-group {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-    .login .input-group div {
-      flex: 1 1 calc(50% - 10px);
-      margin: 5px;
-      position: relative;
-    }
     .login input[type="text"] {
-      width: 100%;
+      width: calc(50% - 10px);
+      margin: 5px;
       padding: 10px;
       border: 1px solid #ddd;
       border-radius: 5px;
-      box-sizing: border-box;
     }
     .login button {
       width: 100%;
@@ -61,58 +50,12 @@
       border-radius: 5px;
       color: #fff;
       font-size: 16px;
-      cursor: pointer;
     }
-    .login button:hover {
-      background: #2980b9;
-    }
-    .prediction {
+    .acknowledgements {
       margin-top: 20px;
-    }
-    @media (max-width: 600px) {
-      .login .input-group div {
-        flex: 1 1 100%;
-      }
-    }
-    .tooltip {
-      visibility: hidden;
-      width: 200px;
-      background-color: #555;
-      color: #fff;
-      text-align: center;
-      border-radius: 6px;
-      padding: 5px;
-      position: absolute;
-      z-index: 1;
-      bottom: 125%;
-      left: 50%;
-      margin-left: -100px;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .login .input-group div:hover .tooltip {
-      visibility: visible;
-      opacity: 1;
-    }
-    #resultPopup {
-      display: none;
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      z-index: 1000;
-    }
-    .popup-content {
-      background-color: #fefefe;
-      margin: 15% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 500px;
+      padding: 10px;
+      background: #e8f8f5;
       border-radius: 10px;
-      text-align: center;
     }
   </style>
 </head>
@@ -128,130 +71,44 @@
     <div class="login">
       <h2>Input Your Data</h2>
       <!-- Main Input For Receiving Query to our ML -->
-      <form action="{{ url_for('predict')}}" method="post" id="predictionForm">
-        <div class="input-group">
-          <div>
-            <input type="text" name="Age" placeholder="Age" required="required" />
-            <span class="tooltip">Enter your age in years</span>
-          </div>
-          <div>
-            <input type="text" name="Gender" placeholder="Gender" required="required" />
-            <span class="tooltip">Enter your gender (Male/Female)</span>
-          </div>
-          <div>
-            <input type="text" name="Air Pollution" placeholder="Air Pollution" required="required" />
-            <span class="tooltip">Rate your exposure to air pollution (1-10)</span>
-          </div>
-          <div>
-            <input type="text" name="Alcohol use" placeholder="Alcohol use" required="required" />
-            <span class="tooltip">Rate your alcohol consumption (1-10)</span>
-          </div>
-          <div>
-            <input type="text" name="Dust Allergy" placeholder="Dust Allergy" required="required" />
-            <span class="tooltip">Do you have a dust allergy? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Occupational Hazards" placeholder="Occupational Hazards" required="required" />
-            <span class="tooltip">Are you exposed to hazards at work? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Genetic Risk" placeholder="Genetic Risk" required="required" />
-            <span class="tooltip">Is there a genetic risk of lung cancer in your family? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Chronic Lung Disease" placeholder="Chronic Lung Disease" required="required" />
-            <span class="tooltip">Do you have any chronic lung diseases? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Balanced Diet" placeholder="Balanced Diet" required="required" />
-            <span class="tooltip">Do you follow a balanced diet? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Obesity" placeholder="Obesity" required="required" />
-            <span class="tooltip">Are you obese? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Smoking" placeholder="Smoking" required="required" />
-            <span class="tooltip">Do you smoke? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Passive Smoker" placeholder="Passive Smoker" required="required" />
-            <span class="tooltip">Are you exposed to secondhand smoke? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Chest Pain" placeholder="Chest Pain" required="required" />
-            <span class="tooltip">Do you experience chest pain? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Coughing of Blood" placeholder="Coughing of Blood" required="required" />
-            <span class="tooltip">Do you cough up blood? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Fatigue" placeholder="Fatigue" required="required" />
-            <span class="tooltip">Do you experience fatigue? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Weight Loss" placeholder="Weight Loss" required="required" />
-            <span class="tooltip">Have you experienced unexplained weight loss? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Shortness of Breath" placeholder="Shortness of Breath" required="required" />
-            <span class="tooltip">Do you experience shortness of breath? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Wheezing" placeholder="Wheezing" required="required" />
-            <span class="tooltip">Do you wheeze? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Swallowing Difficulty" placeholder="Swallowing Difficulty" required="required" />
-            <span class="tooltip">Do you have difficulty swallowing? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Clubbing of Finger Nails" placeholder="Clubbing of Finger Nails" required="required" />
-            <span class="tooltip">Do you have clubbing of your fingernails? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Frequent Cold" placeholder="Frequent Cold" required="required" />
-            <span class="tooltip">Do you frequently catch a cold? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Dry Cough" placeholder="Dry Cough" required="required" />
-            <span class="tooltip">Do you have a dry cough? (Yes/No)</span>
-          </div>
-          <div>
-            <input type="text" name="Snoring" placeholder="Snoring" required="required" />
-            <span class="tooltip">Do you snore? (Yes/No)</span>
-          </div>
-        </div>
+      <form action="{{ url_for('predict')}}" method="post">
+        <input type="text" name="Age" placeholder="Age" required="required" />
+        <input type="text" name="Gender" placeholder="Gender" required="required" />
+        <input type="text" name="Air Pollution" placeholder="Air Pollution" required="required" />
+        <input type="text" name="Alcohol use" placeholder="Alcohol use" required="required" />
+        <input type="text" name="Dust Allergy" placeholder="Dust Allergy" required="required" />
+        <input type="text" name="Occupational Hazards" placeholder="Occupational Hazards" required="required" />
+        <input type="text" name="Genetic Risk" placeholder="Genetic Risk" required="required" />
+        <input type="text" name="Chronic Lung Disease" placeholder="Chronic Lung Disease" required="required" />
+        <input type="text" name="Balanced Diet" placeholder="Balanced Diet" required="required" />
+        <input type="text" name="Obesity" placeholder="Obesity" required="required" />
+        <input type="text" name="Smoking" placeholder="Smoking" required="required" />
+        <input type="text" name="Passive Smoker" placeholder="Passive Smoker" required="required" />
+        <input type="text" name="Chest Pain" placeholder="Chest Pain" required="required" />
+        <input type="text" name="Coughing of Blood" placeholder="Coughing of Blood" required="required" />
+        <input type="text" name="Fatigue" placeholder="Fatigue" required="required" />
+        <input type="text" name="Weight Loss" placeholder="Weight Loss" required="required" />
+        <input type="text" name="Shortness of Breath" placeholder="Shortness of Breath" required="required" />
+        <input type="text" name="Wheezing" placeholder="Wheezing" required="required" />
+        <input type="text" name="Swallowing Difficulty" placeholder="Swallowing Difficulty" required="required" />
+        <input type="text" name="Clubbing of Finger Nails" placeholder="Clubbing of Finger Nails" required="required" />
+        <input type="text" name="Frequent Cold" placeholder="Frequent Cold" required="required" />
+        <input type="text" name="Dry Cough" placeholder="Dry Cough" required="required" />
+        <input type="text" name="Snoring" placeholder="Snoring" required="required" />
 
         <button type="submit" class="btn btn-primary btn-large">Predict</button>
       </form>
-    </div>
-  </div>
 
-  <div id="resultPopup">
-    <div class="popup-content">
-      <h2>Prediction Result</h2>
-      <p id="predictionResult"></p>
-    </div>
-  </div>
+      <div class="prediction">
+        <h2>Prediction Result:</h2>
+        <p>{{ prediction_text }}</p>
+                
+      </div>      
+      
 
-  <script>
-    document.getElementById('predictionForm').addEventListener('submit', function(e) {
-  e.preventDefault();
+    </div>
+    
+  </div>
   
-  // Simulate prediction (replace this with actual AJAX call to your server)
-  setTimeout(function() {
-    document.getElementById('predictionResult').textContent = prediction_text;
-    document.getElementById('resultPopup').style.display = 'block';
-    
-    // Hide the popup after 5 seconds
-    setTimeout(function() {
-      document.getElementById('resultPopup').style.display = 'none';
-    }, 4000);
-    
-  }, 1000);
-});
-  </script>
 </body>
 </html>
